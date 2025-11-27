@@ -1,10 +1,33 @@
 "use client";
 import React from "react";
 import TextBoxComponent from "../partials/Textbox/textbox";
+import { useSearchInputValue } from "@/app/context/searchInputs";
+import { fetchLandIDDataApi } from "@/app/lib/callApi";
+import type { LandIDResult } from "@/app/lib/types";
+import { useLandDataContext } from "@/app/context/landData";
 
 function SearchForm() {
+  const { searchValue, fromDateValue, toDateValue } = useSearchInputValue();
+  const { landData, setLandData, errors, setErrors } = useLandDataContext();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    setErrors([]);
+
+    const executeFetch: LandIDResult = await fetchLandIDDataApi({
+      landID: searchValue,
+      fromDate: fromDateValue,
+      toDate: toDateValue,
+    });
+
+    if (!executeFetch.result && executeFetch.err?.length) {
+      const validationErrors = executeFetch.err.map((e) => e.code);
+      setErrors(validationErrors);
+      setLandData(null);
+      return;
+    }
+
+    setLandData(executeFetch);
   };
   return (
     <div>
