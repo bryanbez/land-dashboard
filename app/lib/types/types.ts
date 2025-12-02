@@ -24,8 +24,3 @@ export type ContributionData = {
   name: string;
   continent: number;
 };
-
-export type DevPtsPerContinent = {
-  continent: number;
-  total: number;
-};

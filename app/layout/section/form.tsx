@@ -3,7 +3,7 @@ import React from "react";
 import TextBoxComponent from "../partials/Textbox/textbox";
 import { useSearchInputValue } from "@/app/context/searchInputs";
 import { fetchLandIDDataApi } from "@/app/lib/callApi";
-import type { LandIDResult } from "@/app/lib/types";
+import type { LandIDResult } from "@/app/lib/types/types";
 import { useLandDataContext } from "@/app/context/landData";
 
 function SearchForm() {
@@ -59,18 +59,3 @@ function SearchForm() {
 }
 
 export default SearchForm;
-
-{
-  /* <div>
-      <form
-        onSubmit={handleSubmit}
-        className="flex gap-2 p-3 bg-white border border-gray-600 rounded-2xl shadow-sm w-full">
-        <input {...textBoxProps} ref={searchTextBox} />
-        <button
-          type="submit"
-          className="p-2 rounded-md bg-blue-600 text-white hover:bg-blue-700">
-          Search
-        </button>
-      </form>
-    </div> */
-}

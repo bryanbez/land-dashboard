@@ -1,5 +1,5 @@
 import { ContextParams, ContextParamsSchema } from "./validator";
-import type { LandIDResult } from "./types";
+import type { LandIDResult } from "./types/types";
 
 export async function fetchLandIDDataApi(
   params: ContextParams
@@ -15,13 +15,20 @@ export async function fetchLandIDDataApi(
 
   const parsedData = parsed.data;
 
+  // const tempData = {
+  //   // for cut time filling textboxes for debugging. just click the search
+  //   landID: "134541",
+  //   fromDate: "2025-11-28",
+  //   toDate: "2025-12-02",
+  // };
+
   try {
     const res = await fetch("http://localhost:3000/api/land", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(parsedData),
+      body: JSON.stringify(parsedData), // parsedData is original
     });
 
     if (!res.ok) {

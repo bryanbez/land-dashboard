@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { ContextParams, ContextParamsSchema } from "@/app/lib/validator";
-import type { LandIDResult } from "@/app/lib/types";
+import type { LandIDResult } from "@/app/lib/types/types";
 
 export async function POST(req: Request): Promise<NextResponse<LandIDResult>> {
   try {

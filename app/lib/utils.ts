@@ -1,8 +1,13 @@
-import { ContributionData, DevPtsPerContinent } from "./types";
+import { ContributionData } from "./types/types";
+import { CellValue } from "../layout/partials/Table/table.types";
+import {
+  TotalDevPtsPerContinentRow,
+  TableRowDynamic,
+} from "../layout/partials/Table/table.schema";
 
-export const sumOfTotalDevPtsinEveryContinent = (
+export const devPtsPerContinent = (
   data: ContributionData[]
-): DevPtsPerContinent[] => {
+): TableRowDynamic<TotalDevPtsPerContinentRow>[] => {
   const groupedPtsPerContinent = data.reduce<Record<number, number>>(
     (acc, current) => {
       if (!acc[current.continent]) acc[current.continent] = 0;
@@ -22,17 +27,30 @@ export const sumOfTotalDevPtsinEveryContinent = (
   return output;
 };
 
-export const totalDevPtsOnDateRangePicked = (
-  data: ContributionData[]
-): number => {
+export const sumDevPtsByContinent = (data: ContributionData[]): number => {
   return data.reduce((sum, current) => sum + current.total, 0);
 };
 
-export const sortDevPts = <T extends { continent: number; total: number }>(
+export const sortDevPts = <T extends TotalDevPtsPerContinentRow>(
   data: T[],
   order: "asc" | "desc" = "desc"
-): DevPtsPerContinent[] => {
+): TotalDevPtsPerContinentRow[] => {
   return [...data].sort((first, second) =>
     order === "desc" ? second.total - first.total : first.total - second.total
   );
 };
+
+export function toFixedAtTwoDecimalPlaces<Key extends string>(
+  key: Key,
+  value: CellValue
+) {
+  console.log(value);
+  if (value == null) return "";
+  return key === "total" && typeof value === "number"
+    ? value.toFixed(2)
+    : value;
+}
+
+// export function extractDataKeys<T extends Record<string, any>>(rows: T[]) {
+//   return Object.keys(rows[0] ?? {}) as (keyof T)[];
+// }

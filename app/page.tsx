@@ -7,8 +7,8 @@ export default function Home() {
   return (
     <SearchInputProvider>
       <LandDataProvider>
-        <div className="flex h-screen items-center justify-center bg-gray-300">
-          <main className="flex h-[90%] w-[90%] items-center justify-center bg-gray-50 rounded-2xl shadow-2xl">
+        <div className="flex items-center justify-center bg-gray-300 overflow-auto">
+          <main>
             <MainComponent />
           </main>
         </div>

@@ -1,22 +1,54 @@
+"use client";
+
+import { useMemo, useState } from "react";
 import { useLandDataContext } from "@/app/context/landData";
+import { devPtsPerContinent, sumDevPtsByContinent } from "@/app/lib/utils";
+import TableComponent from "../partials/Table/table";
 import {
-  sumOfTotalDevPtsinEveryContinent,
-  totalDevPtsOnDateRangePicked,
-  sortDevPts,
-} from "@/app/lib/utils";
+  sortTableData,
+  paginateTableData,
+} from "../partials/Table/table.handler";
+import {
+  TableColumns,
+  TableSortKey,
+  TotalDevPtsPerContinentRow,
+  TotalDevPtsPerContinentColumns,
+  HiddenColumn,
+  TableRowDynamic,
+} from "../partials/Table/table.schema";
 
 function DisplayDataInTableMode() {
   const { landData, errors } = useLandDataContext();
 
-  const totalDevPts = totalDevPtsOnDateRangePicked(
-    landData?.contribution ?? []
-  );
+  const data = useMemo(() => landData?.contribution ?? [], [landData]);
 
-  const devPtsPerContinent = sortDevPts(
-    sumOfTotalDevPtsinEveryContinent(landData?.contribution ?? []),
-    "desc"
-  );
+  const [page, setPage] = useState(1);
+  const [sortBy, setSortBy] = useState<TableSortKey>("total");
 
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
+
+  const totalDevPts = sumDevPtsByContinent(data);
+  const displayDevPts = devPtsPerContinent(data);
+
+  const sortedDataOutput = sortTableData(data, sortBy, sortDir);
+  const paginatedData = paginateTableData(sortedDataOutput, page, 15);
+
+  const handleSorting = (key: TableSortKey) => {
+    if (sortBy === null) {
+      setSortBy(key);
+      setSortDir("desc");
+      setPage(1);
+      return;
+    }
+    if (key === sortBy) {
+      setSortDir((d) => (d === "asc" ? "desc" : "asc"));
+    } else {
+      setSortBy(key);
+      setSortDir("desc");
+    }
+
+    setPage(1);
+  };
   return (
     <>
       {errors.length > 0 && (
@@ -28,14 +60,20 @@ function DisplayDataInTableMode() {
       )}
 
       {totalDevPts && <p>{totalDevPts.toFixed(2)}</p>}
-      {devPtsPerContinent.map((data, index) => (
-        <p key={index}>{`Continent ${data.continent}: ${data.total.toFixed(
-          2
-        )}`}</p>
-      ))}
-
-      {/* Display result */}
-      {landData && <pre>{JSON.stringify(landData, null, 2)}</pre>}
+      {landData && (
+        <TableComponent
+          data={displayDevPts}
+          columns={TotalDevPtsPerContinentColumns}
+        />
+      )}
+      {landData && (
+        <TableComponent
+          data={paginatedData ?? []}
+          columns={TableColumns}
+          onToggleSortBy={handleSorting}
+          hiddenColumns={HiddenColumn}
+        />
+      )}
     </>
   );
 }

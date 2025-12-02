@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, ReactNode } from "react";
-import type { LandIDResult } from "../lib/types";
+import type { LandIDResult } from "../lib/types/types";
 
 type LandDataContextType = {
   landData: LandIDResult | null;
