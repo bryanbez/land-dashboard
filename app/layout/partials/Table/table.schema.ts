@@ -29,7 +29,22 @@ export interface TotalDevPtsPerContinentRow {
   total: number;
 }
 
+type SortDir = ["asc", "desc"];
+
 // dynamic keys plus the default
 
 export type TableRowDynamic<T = TableRow> = T &
   Partial<Record<string, string | number | null>>;
+
+export interface TableProps<
+  T extends Record<string, unknown>,
+  Keys extends keyof T = keyof T
+> {
+  data: TableRowDynamic<T>[];
+  sortBy?: Keys;
+  sortDir?: SortDir;
+  columns: readonly Keys[];
+  limit?: number;
+  hiddenColumns?: readonly Keys[];
+  onToggleSortBy?: (key: Keys) => void;
+}

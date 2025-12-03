@@ -7,10 +7,8 @@ export default function Home() {
   return (
     <SearchInputProvider>
       <LandDataProvider>
-        <div className="flex items-center justify-center bg-gray-300 overflow-auto">
-          <main>
-            <MainComponent />
-          </main>
+        <div className="w-full flex items-center justify-center bg-gray-300 overflow-auto">
+          <MainComponent />
         </div>
       </LandDataProvider>
     </SearchInputProvider>

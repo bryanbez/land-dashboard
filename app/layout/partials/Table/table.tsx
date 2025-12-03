@@ -1,30 +1,10 @@
 import { toFixedAtTwoDecimalPlaces } from "@/app/lib/utils";
-import { TableRowDynamic } from "./table.schema";
-
-interface TableProps<
-  T extends Record<string, unknown>,
-  Keys extends keyof T = keyof T
-> {
-  data: TableRowDynamic<T>[];
-  sortBy?: Keys;
-  sortDir?: "asc" | "desc";
-  columns: readonly Keys[];
-  limit?: number;
-  hiddenColumns?: readonly Keys[];
-  onToggleSortBy?: (key: Keys) => void;
-}
+import { TableProps } from "./table.schema";
 
 function TableComponent<
   T extends Record<string, unknown>,
   Keys extends keyof T
->({
-  data,
-  // limit,
-  columns,
-
-  hiddenColumns,
-  onToggleSortBy,
-}: TableProps<T, Keys>) {
+>({ data, columns, hiddenColumns, onToggleSortBy }: TableProps<T, Keys>) {
   if (!data || data.length === 0) return <p>No data available</p>;
 
   const visibleColumns = columns.filter(

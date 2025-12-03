@@ -28,7 +28,7 @@ export async function fetchLandIDDataApi(
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(parsedData), // parsedData is original
+      body: JSON.stringify(parsedData),
     });
 
     if (!res.ok) {

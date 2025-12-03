@@ -51,6 +51,17 @@ export function toFixedAtTwoDecimalPlaces<Key extends string>(
     : value;
 }
 
+export function getContinentsContributed(data: ContributionData[]): number {
+  const uniqueContinents = Array.from(
+    new Set(data.map((item) => item.continent))
+  );
+  return uniqueContinents.length;
+}
+
+export function getCountOfPlayersContributed(data: ContributionData[]): number {
+  return data.length;
+}
+
 // export function extractDataKeys<T extends Record<string, any>>(rows: T[]) {
 //   return Object.keys(rows[0] ?? {}) as (keyof T)[];
 // }

@@ -30,26 +30,29 @@ function SearchForm() {
     setLandData(executeFetch);
   };
   return (
-    <div>
+    <div className="w-full">
       <form
         onSubmit={handleSubmit}
-        className="grid grid-cols-4 gap-4 items-start border-2 border-black rounded-xl py-2 px-2">
+        className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 bg-white rounded-xl shadow">
         <div className="flex flex-col">
-          <label className="mb-1">Land ID</label>
+          <label className="text-sm font-medium mb-1">Land ID</label>
           <TextBoxComponent inputType="text" />
         </div>
+
         <div className="flex flex-col">
-          <label className="mb-1">From</label>
+          <label className="text-sm font-medium mb-1">From</label>
           <TextBoxComponent inputType="dateFrom" />
         </div>
+
         <div className="flex flex-col">
-          <label className="mb-1">To</label>
+          <label className="text-sm font-medium mb-1">To</label>
           <TextBoxComponent inputType="dateTo" />
         </div>
-        <div className="flex items-center justify-center">
+
+        <div className="flex items-end">
           <button
             type="submit"
-            className="p-2 rounded-md bg-blue-600 text-white hover:bg-blue-700">
+            className="w-full md:w-auto px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
             Search
           </button>
         </div>
