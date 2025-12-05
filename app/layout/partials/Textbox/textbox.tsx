@@ -1,8 +1,16 @@
 "use client";
+import type { FormValues } from "./textbox.types";
+import type { FieldValues } from "react-hook-form";
+import type { TextboxTypes } from "./textbox.types";
 
 import { useSearchInputValue } from "@/app/context/searchInputs";
 
-function TextBoxComponent({ inputType }: { inputType: string }) {
+function TextBoxComponent<FormValues extends FieldValues>({
+  inputName,
+  type,
+  errors,
+  register,
+}: TextboxTypes<FormValues>) {
   const {
     searchValue,
     setSearchValue,
@@ -15,28 +23,36 @@ function TextBoxComponent({ inputType }: { inputType: string }) {
   let value = "";
   let onChange: (e: React.ChangeEvent<HTMLInputElement>) => void = () => {};
 
-  if (inputType === "text") {
+  if (inputName === "landID") {
     value = searchValue;
     onChange = (e) => setSearchValue(e.target.value);
   }
 
-  if (inputType === "dateFrom") {
+  if (inputName === "fromDate") {
     value = fromDateValue;
     onChange = (e) => setFromDateValue(e.target.value);
   }
 
-  if (inputType === "dateTo") {
+  if (inputName === "toDate") {
     value = toDateValue;
     onChange = (e) => setToDateValue(e.target.value);
   }
 
   return (
-    <input
-      type={inputType.includes("date") ? "date" : "text"}
-      value={value}
-      onChange={onChange}
-      className="w-full resize-none text-black overflow-hidden bg-transparent focus:outline-none text-sm placeholder-gray-400 py-2"
-    />
+    <>
+      <input
+        type={type}
+        {...register(inputName)}
+        value={value}
+        className={`${
+          errors?.[inputName] ? "border-red-500" : "border-gray-300"
+        }w-full resize-none text-black overflow-hidden bg-transparent focus:outline-none text-sm placeholder-gray-400 py-2`}
+        onChange={onChange}
+      />
+      {errors?.[inputName]?.message && (
+        <p className="text-red-500 text-sm mt-1">{errors[inputName].message}</p>
+      )}
+    </>
   );
 }
 

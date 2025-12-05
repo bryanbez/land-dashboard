@@ -17,6 +17,18 @@ export const ContextParamsSchema = z
   .refine((data) => new Date(data.fromDate) <= new Date(data.toDate), {
     message: "FromDate must be before or equal to ToDate",
     path: ["toDate"],
-  });
+  })
+  .refine(
+    (data) => {
+      const diffOfToDateAndFromDate =
+        new Date(data.toDate).getTime() - new Date(data.fromDate).getTime();
+
+      return diffOfToDateAndFromDate <= 6 * 24 * 60 * 60 * 1000;
+    },
+    {
+      message: "Date range cannot exceed 6 days",
+      path: ["toDate"],
+    }
+  );
 
 export type ContextParams = z.infer<typeof ContextParamsSchema>;

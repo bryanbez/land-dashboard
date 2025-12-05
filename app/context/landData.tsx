@@ -3,9 +3,9 @@ import type { LandIDResult } from "../lib/types/types";
 
 type LandDataContextType = {
   landData: LandIDResult | null;
-  errors: string[];
+  apiErrors: string[];
   setLandData: (data: LandIDResult | null) => void;
-  setErrors: (errors: string[]) => void;
+  setApiErrors: (errors: string[]) => void;
 };
 
 export const LandDataContext = createContext<LandDataContextType | undefined>(
@@ -14,11 +14,11 @@ export const LandDataContext = createContext<LandDataContextType | undefined>(
 
 export function LandDataProvider({ children }: { children: ReactNode }) {
   const [landData, setLandData] = useState<LandIDResult | null>(null);
-  const [errors, setErrors] = useState<string[]>([]);
+  const [apiErrors, setApiErrors] = useState<string[]>([]);
 
   return (
     <LandDataContext.Provider
-      value={{ landData, errors, setLandData, setErrors }}>
+      value={{ landData, apiErrors, setLandData, setApiErrors }}>
       {children}
     </LandDataContext.Provider>
   );

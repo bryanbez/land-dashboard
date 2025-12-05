@@ -1,36 +1,20 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LOK LAND DEV PTS TRACKER/DASHBOARD
 
-## Getting Started
+> For LOK Landlords or player wants to track the development points contributed in specific land.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Table of Continent/s and Player/s that contributed to the land
+- Graph for illustration of every continent/s contribution
+- Card display for total dev pts, continent, players contributed and (estimate revenue (coming soon))
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Limitation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Date Range up to 6 days (api limitation)
+- Data are available from last month until the current date of searching. (searching from 2 months and below resulted in no data)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Ongoing enchancements
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [OK] Input Validation
+- [] Search and Pagination
+- [] Export file of data for Landlords with a2z/loka/usdt per 1k dev pts

@@ -5,48 +5,73 @@ import { useSearchInputValue } from "@/app/context/searchInputs";
 import { fetchLandIDDataApi } from "@/app/lib/callApi";
 import type { LandIDResult } from "@/app/lib/types/types";
 import { useLandDataContext } from "@/app/context/landData";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ContextParamsSchema } from "@/app/lib/validator";
+import type { FormValues } from "../partials/Textbox/textbox.types";
 
 function SearchForm() {
   const { searchValue, fromDateValue, toDateValue } = useSearchInputValue();
-  const { landData, setLandData, errors, setErrors } = useLandDataContext();
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const { landData, setLandData, apiErrors, setApiErrors } =
+    useLandDataContext();
 
-    setErrors([]);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
+    resolver: zodResolver(ContextParamsSchema),
+  });
 
+  const onHandleSubmit = async (data: FormValues) => {
+    setApiErrors([]);
     const executeFetch: LandIDResult = await fetchLandIDDataApi({
       landID: searchValue,
       fromDate: fromDateValue,
       toDate: toDateValue,
     });
-
     if (!executeFetch.result && executeFetch.err?.length) {
       const validationErrors = executeFetch.err.map((e) => e.code);
-      setErrors(validationErrors);
+      setApiErrors(validationErrors);
       setLandData(null);
       return;
     }
-
     setLandData(executeFetch);
   };
   return (
     <div className="w-full">
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onHandleSubmit)}
         className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 bg-white rounded-xl shadow">
         <div className="flex flex-col">
           <label className="text-sm font-medium mb-1">Land ID</label>
-          <TextBoxComponent inputType="text" />
+          <TextBoxComponent
+            type="text"
+            inputName="landID"
+            register={register}
+            errors={errors}
+            placeholder="Search Land ID..."
+          />
         </div>
 
         <div className="flex flex-col">
           <label className="text-sm font-medium mb-1">From</label>
-          <TextBoxComponent inputType="dateFrom" />
+          <TextBoxComponent
+            type="date"
+            inputName="fromDate"
+            register={register}
+            errors={errors}
+          />
         </div>
 
         <div className="flex flex-col">
           <label className="text-sm font-medium mb-1">To</label>
-          <TextBoxComponent inputType="dateTo" />
+          <TextBoxComponent
+            inputName="toDate"
+            type="date"
+            register={register}
+            errors={errors}
+          />
         </div>
 
         <div className="flex items-end">
