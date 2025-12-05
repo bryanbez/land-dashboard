@@ -6,6 +6,8 @@ export async function fetchLandIDDataApi(
 ): Promise<LandIDResult> {
   const parsed = ContextParamsSchema.safeParse(params);
 
+  const baseURL = process.env.NEXT_PUBLIC_API_URL;
+
   if (!parsed.success) {
     return {
       result: false,
@@ -23,7 +25,7 @@ export async function fetchLandIDDataApi(
   // };
 
   try {
-    const res = await fetch("http://localhost:3000/api/land", {
+    const res = await fetch(`${baseURL}/api/land`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -3,6 +3,7 @@ import { ContextParams, ContextParamsSchema } from "@/app/lib/validator";
 import type { LandIDResult } from "@/app/lib/types/types";
 
 export async function POST(req: Request): Promise<NextResponse<LandIDResult>> {
+  const externalAPI = process.env.EXTERNAL_API_URL;
   try {
     const body = await req.json();
 
@@ -20,7 +21,7 @@ export async function POST(req: Request): Promise<NextResponse<LandIDResult>> {
     const { landID, fromDate, toDate }: ContextParams = parsedParams.data;
 
     const fetchData = await fetch(
-      `https://api-lok-live.leagueofkingdoms.com/api/stat/land/contribution?landId=${landID}&from=${fromDate}&to=${toDate}`
+      `${externalAPI}?landId=${landID}&from=${fromDate}&to=${toDate}`
     );
 
     if (!fetchData.ok) {
