@@ -16,7 +16,7 @@ function DevPtsPerPlayerTable() {
     <>
       {landData && (
         <TableComponent
-          data={paginatedData ?? []}
+          data={data ?? []}
           columns={TableColumns}
           onToggleSortBy={onToggleSortBy}
           hiddenColumns={HiddenColumn}
