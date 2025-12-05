@@ -11,12 +11,15 @@ function DevPtsPerPlayerTable() {
 
   const data = useMemo(() => landData?.contribution ?? [], [landData]);
 
-  const { paginatedData, onToggleSortBy } = useTableData(data, "total");
+  const { paginatedData, sortedData, onToggleSortBy } = useTableData(
+    data,
+    "total"
+  );
   return (
     <>
       {landData && (
         <TableComponent
-          data={data ?? []}
+          data={sortedData ?? []} // temp data when paginatedData under work
           columns={TableColumns}
           onToggleSortBy={onToggleSortBy}
           hiddenColumns={HiddenColumn}
