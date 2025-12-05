@@ -44,7 +44,6 @@ export function toFixedAtTwoDecimalPlaces<Key extends string>(
   key: Key,
   value: CellValue
 ) {
-  console.log(value);
   if (value == null) return "";
   return key === "total" && typeof value === "number"
     ? value.toFixed(2)
@@ -61,7 +60,3 @@ export function getContinentsContributed(data: ContributionData[]): number {
 export function getCountOfPlayersContributed(data: ContributionData[]): number {
   return data.length;
 }
-
-// export function extractDataKeys<T extends Record<string, any>>(rows: T[]) {
-//   return Object.keys(rows[0] ?? {}) as (keyof T)[];
-// }
