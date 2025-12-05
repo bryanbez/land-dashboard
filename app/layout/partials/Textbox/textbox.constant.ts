@@ -1,4 +1,5 @@
 import { TextboxTypes } from "./textbox.types";
+import type { FormValues } from "./textbox.types";
 
 export const TextBoxConstant = ({
   value,
@@ -6,7 +7,7 @@ export const TextBoxConstant = ({
   placeholder,
   type = "text",
   className,
-}: TextboxTypes) => ({
+}: TextboxTypes<FormValues>) => ({
   value,
   onChange,
   placeholder,
